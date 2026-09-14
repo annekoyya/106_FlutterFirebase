@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'auth/login.dart';
-import 'Page1.dart';
+import 'controllers/alldata.dart';
 
 class Authenticator extends StatefulWidget {
   const Authenticator({super.key});
@@ -21,8 +21,10 @@ class _AuthenticatorState extends State<Authenticator> {
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (snapshot.hasData) {
-          return const Page1();
+          // User is logged in - show the list
+          return const Alldata();
         } else {
+          // User is not logged in - show login
           return const LoginForm();
         }
       },

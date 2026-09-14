@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'register.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -147,6 +148,24 @@ class _LoginFormState extends State<LoginForm> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              // ✅ THIS IS THE REGISTER LINK!
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterForm()),
+                  );
+                },
+                child: const Text(
+                  'REGISTER HERE!',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
