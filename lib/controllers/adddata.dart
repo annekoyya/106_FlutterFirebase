@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:convert'; // For web compatibility
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:flutter/foundation.dart'; // For kIsWeb
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../model/employee.dart';
@@ -119,17 +121,15 @@ class _AddDataState extends State<AddData> {
               ),
               const SizedBox(height: 25),
               
-              // ✅ IMAGE SECTION
+              // ✅ IMAGE PREVIEW - Web & Mobile Compatible
               _pickedFile == null
                   ? Column(
                       children: [
-                        // NO GREY BOX, just text
                         const Text(
                           'No image selected.',
                           style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
                         const SizedBox(height: 15),
-                        // Greyed out button
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
@@ -149,7 +149,7 @@ class _AddDataState extends State<AddData> {
                     )
                   : Column(
                       children: [
-                        // Image preview with blue border
+                        // ✅ Web-compatible image preview
                         Container(
                           height: 150,
                           width: 150,
@@ -159,14 +159,12 @@ class _AddDataState extends State<AddData> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                            child: Image.file(
-                              File(_pickedFile!.path),
-                              fit: BoxFit.cover,
-                            ),
+                            child: kIsWeb
+                                ? Image.network(_pickedFile!.path) // Web uses network
+                                : Image.file(File(_pickedFile!.path)), // Mobile uses file
                           ),
                         ),
                         const SizedBox(height: 15),
-                        // Change Image button
                         SizedBox(
                           width: double.infinity,
                           child: OutlinedButton(
